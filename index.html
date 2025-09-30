@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Online Class</title>
+  <script src='https://meet.jit.si/external_api.js'></script>
+  <style>
+    #meet {
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="meet"></div>
+  <script>
+    const domain = "meet.jit.si";
+    const options = {
+      roomName: "MyOnlineClass123",   // Change room name each session
+      width: "100%",
+      height: "100%",
+      parentNode: document.querySelector('#meet'),
+      interfaceConfigOverwrite: {
+        TOOLBAR_BUTTONS: [
+          'microphone', 'camera', 'chat', 'raisehand', 'tileview'
+        ]
+      },
+      userInfo: {
+        displayName: "Teacher"
+      }
+    };
+    const api = new JitsiMeetExternalAPI(domain, options);
+
+    // Example: Host can mute someone
+    api.addEventListener('participantJoined', (participant) => {
+      console.log("New student joined:", participant);
+    });
+
+    // Teacher can mute all
+    function muteAll() {
+      api.executeCommand('muteEveryone');
+    }
+  </script>
+</body>
+</html>
